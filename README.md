@@ -1,1 +1,2 @@
-add README test
+OOP
+객제지향설계 과제
