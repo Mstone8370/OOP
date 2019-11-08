@@ -3,7 +3,7 @@
 #include "vehicle.h"
 
 class car: public vehicle {
-	protected:
+	private:
 		char* car_name;
 	public:
 		car();

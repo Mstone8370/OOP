@@ -2,7 +2,7 @@
 #define VEHICLE_H
 
 class vehicle {
-	protected:
+	private:
 		bool has_name;
 		int wheel_number;
 		int max_speed;
