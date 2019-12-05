@@ -1,3 +1,6 @@
+#ifndef BLOCK_H
+#define BLOCK_H
+
 #include "color.h"
 
 class Block {
@@ -6,7 +9,6 @@ class Block {
     int x, y;
     
     public:
-    Block();
     Block(Color c);
     Block(Color c, int x, int y);
     Color get_color();
@@ -22,3 +24,5 @@ class Block {
     void down();
     void down_all();
 };
+
+#endif

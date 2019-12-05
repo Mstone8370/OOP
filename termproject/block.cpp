@@ -1,9 +1,5 @@
 #include "block.h"
 
-Block::Block() {
-
-}
-
 Block::Block(Color c) {
     this->color = c;
 }

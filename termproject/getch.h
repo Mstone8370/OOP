@@ -1,3 +1,6 @@
+#ifndef GETCH_H
+#define GETCH_H
+
 #include <termios.h>
 #include <stdio.h>
 
@@ -8,3 +11,5 @@ void resetTermios(void);
 char getch_(int echo);
 char getch(void);
 char getche(void);
+
+#endif
