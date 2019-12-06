@@ -1,8 +1,11 @@
 #ifndef BLOCK_H
 #define BLOCK_H
 
+#include <string>
+
 #include "color.h"
 
+class Array_2d;
 class Block {
     private:
     Color color;
@@ -23,6 +26,7 @@ class Block {
     void right();
     void down();
     void down_all();
+    std::string to_string();
 };
 
 #endif

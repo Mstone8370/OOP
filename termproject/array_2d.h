@@ -1,4 +1,8 @@
+#ifndef ARRAY_2D_H
+#define ARRAY_2D_H
+
 #include <iostream>
+#include <unistd.h>
 
 #include "block.h"
 #include "color.h"
@@ -18,3 +22,5 @@ class Array_2d {
     void delete_block(int x, int y);
     void print();
 };
+
+#endif
