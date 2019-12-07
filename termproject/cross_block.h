@@ -7,6 +7,7 @@ class CrossBlock: public BigBlock {
     private:
 
     public:
+    CrossBlock(int x, Color c1, Color c2, Color c3);
     void rotate();
 };
 

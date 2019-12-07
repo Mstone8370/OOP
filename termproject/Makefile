@@ -2,7 +2,7 @@
 
 CXX = g++
 TARGET = test
-OBJECTS = main.o array_2d.o block.o
+OBJECTS = main.o array_2d.o block.o big_block.o
 
 %.o: %.c
 	$(CXX) -c $^

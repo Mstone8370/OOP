@@ -1,14 +1,10 @@
 #include "block.h"
-#include "array_2d.h"
-
-Block::Block(Color c) {
-    this->color = c;
-}
 
 Block::Block(Color c, int x, int y) {
     this->color = c;
     this->x = x;
     this->y = y;
+    this->set_location(x, y);
 }
 
 Color Block::get_color() { return this->color; }
@@ -28,31 +24,35 @@ void Block::set_color(Color c) {
 
 bool Block::can_left() {
     if(this->x > 0) {
-        return true;
-    } else {
-        return false;
+        Block* left_block = Array_2d::block_arr[this->y][(this->x)-1];
+        if(left_block == nullptr) {
+            return true;
+        }
     }
+
+    return false;
 }
 
 bool Block::can_right() {
     if(this->x < (W-1)) {
-        return true;
-    } else {
-        return false;
+        Block* right_block = Array_2d::block_arr[this->y][(this->x)+1];
+        if(right_block == nullptr) {
+            return true;
+        }
     }
+
+    return false;
 }
 
 bool Block::can_down() {
-    if(this->y == (H-1)) {
-        return false;
+    if(this->y < (H-1)) {
+        Block* down_block = Array_2d::block_arr[(this->y)+1][this->x];
+        if(down_block == nullptr) {
+            return true;
+        }
     }
 
-    Block* down_block = Array_2d::block_arr[(this->y)+1][this->x];
-    if(down_block == nullptr) {
-        return true;
-    } else {
-        return false;
-    }
+    return false;
 }
 
 void Block::left() {

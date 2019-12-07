@@ -3,16 +3,15 @@
 
 #include <string>
 
+#include "array_2d.h"
 #include "color.h"
 
-class Array_2d;
 class Block {
     private:
     Color color;
     int x, y;
     
     public:
-    Block(Color c);
     Block(Color c, int x, int y);
     Color get_color();
     int get_x();

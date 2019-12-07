@@ -1,13 +1,19 @@
 #ifndef BIG_BLOCK_H
 #define BIG_BLOCK_H
 
+#include <vector>
+#include <algorithm>
+
 #include "block.h"
+#include "array_2d.h"
 
 class BigBlock {
-    private:
+    protected:
+    std::vector<Block*> v;
+    int min_x, min_y, max_x, max_y;
 
     public:
-    void rotate();
+    virtual void rotate() = 0;
     bool can_left();
     bool can_right();
     bool can_down();
