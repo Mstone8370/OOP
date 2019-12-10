@@ -10,6 +10,7 @@ class BigBlock {
     protected:
     std::vector<Block*> v;
     int min_x, min_y, max_x, max_y;
+    void update();
 
     public:
     virtual void rotate() = 0;
@@ -19,8 +20,6 @@ class BigBlock {
     void left();
     void right();
     void down();
-    void down_all();
-    std::vector<Block*> get_block();
 };
 
 #endif

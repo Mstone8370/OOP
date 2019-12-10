@@ -12,11 +12,17 @@ CrossBlock::CrossBlock(int x, Color c1, Color c2, Color c3) {
     Block* b4 = new Block(GREY, x, 1);
     Block* b5 = new Block(c3, x+1, 0);
 
-    this->v.push_back(b1);
-    this->v.push_back(b2);
-    this->v.push_back(b3);
-    this->v.push_back(b4);
+    // this->v.push_back(b1);
+    // this->v.push_back(b2);
+    // this->v.push_back(b3);
+    // this->v.push_back(b4);
+    // this->v.push_back(b5);
+
     this->v.push_back(b5);
+    this->v.push_back(b4);
+    this->v.push_back(b3);
+    this->v.push_back(b2);
+    this->v.push_back(b1);
 }
 
 void CrossBlock::rotate() {

@@ -70,10 +70,11 @@ void Block::right() {
 }
 
 void Block::down() {
-    if(this->can_down()) {
-        this->set_location(this->x, (this->y)+1);
-    }
-    Array_2d::update(this);
+    // if(this->can_down()) {
+    //     this->set_location(this->x, (this->y)+1);
+    // }
+    // Array_2d::update(this);
+    this->set_location(this->x, (this->y)+1);
 }
 
 void Block::down_all() {

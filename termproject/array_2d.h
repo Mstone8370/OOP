@@ -29,6 +29,7 @@ class Array_2d {
     bool can_make(Type t);
     int get_score();
     static void update(Block* b);
+    void down_blocks();
     void delete_block(int x, int y);
     void print();
 };

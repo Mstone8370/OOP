@@ -54,9 +54,7 @@ void BigBlock::left() {
             (*iter)->left();
         }
     }
-    for(auto iter = (this->v).begin(); iter < (this->v).end(); iter++) {
-        Array_2d::update(*iter);
-    }
+    this->update();
 }
 
 void BigBlock::right() {
@@ -65,9 +63,7 @@ void BigBlock::right() {
             (*iter)->right();
         }
     }
-    for(auto iter = (this->v).begin(); iter < (this->v).end(); iter++) {
-        Array_2d::update(*iter);
-    }
+    this->update();
 }
 
 void BigBlock::down() {
@@ -76,14 +72,11 @@ void BigBlock::down() {
             (*iter)->down();
         }
     }
+    this->update();
 }
 
-void BigBlock::down_all() {
-    while(this->can_down()) {
-        this->down();
+void BigBlock::update() {
+    for(auto iter = (this->v).begin(); iter < (this->v).end(); iter++) {
+        Array_2d::update(*iter);
     }
-}
-
-std::vector<Block*> BigBlock::get_block() {
-    return this->v;
 }

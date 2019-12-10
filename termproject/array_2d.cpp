@@ -13,9 +13,8 @@ Array_2d::Array_2d() {
 
         BigBlock* current_block = new CrossBlock(1, RED, BLUE, GREEN);
 
-        while(current_block != nullptr) {
+        while(true) {
             this->print();
-            std::cout << current_block << std::endl;
 
             char c = getch();
             if(c == 'a') {
@@ -26,23 +25,18 @@ Array_2d::Array_2d() {
                 if(current_block->can_down()) {
                     current_block->down();
                 } else {
-                    std::vector<Block*> vec = current_block->get_block();
-                    for(auto iter = vec.begin(); iter < vec.end(); iter++) {
-                        (*iter)->down_all();
-                    }
-                    this->print();
                     delete(current_block);
+                    this->down_blocks();
+                    this->print();
                     break;
                 }
             } else if(c == 'x') {
-                current_block->down_all();
-                std::vector<Block*> vec = current_block->get_block();
-                for(auto iter = vec.begin(); iter < vec.end(); iter++) {
-                    (*iter)->down_all();
-                }
-                this->print();
                 delete(current_block);
+                this->down_blocks();
+                this->print();
                 break;
+            } else if(c == 'r') {
+                current_block->rotate();
             } else {
                 continue;
             }
@@ -86,6 +80,15 @@ void Array_2d::update(Block* b) {
     int x = b->get_x();
     int y = b->get_y();
     block_arr[y][x] = b;
+}
+
+void Array_2d::down_blocks() {
+    for(int i = (H-1); i >= 0; i--) {
+        for(int j = (W-1); j >= 0; j--) {
+            Block* b = block_arr[i][j];
+            if(b != nullptr) b->down_all();
+        }
+    }
 }
 
 void Array_2d::delete_block(int x, int y) {
