@@ -1,7 +1,6 @@
 #ifndef BIG_BLOCK_H
 #define BIG_BLOCK_H
 
-#include <vector>
 #include <algorithm>
 
 #include "block.h"
@@ -21,6 +20,7 @@ class BigBlock {
     void right();
     void down();
     void down_all();
+    std::vector<Block*> get_block();
 };
 
 #endif

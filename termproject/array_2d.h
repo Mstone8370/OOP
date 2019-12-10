@@ -3,14 +3,17 @@
 
 #include <iostream>
 #include <unistd.h>
+#include <vector>
 
 #include "color.h"
+#include "getch.h"
 
 #define W 5
 #define H 12
 
 class Block;
 class BigBlock;
+class CrossBlock;
 
 enum Type {
     CROSS, FOLD, TREE
@@ -25,6 +28,7 @@ class Array_2d {
     Array_2d();
     bool can_make(Type t);
     int get_score();
+    static void update(Block* b);
     void delete_block(int x, int y);
     void print();
 };

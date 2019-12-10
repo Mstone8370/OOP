@@ -5,17 +5,17 @@ Block::Block(Color c, int x, int y) {
     this->x = x;
     this->y = y;
     this->set_location(x, y);
+    Array_2d::update(this);
 }
 
 Color Block::get_color() { return this->color; }
 int Block::get_x() { return this->x; }
 int Block::get_y() { return this->y; }
 
-void Block::set_location(int x, int y) {
+void Block::set_location(int x, int y) { // set_loctaion 한 다음 Array_2d::update(b) 해야함
     Array_2d::block_arr[this->y][this->x] = nullptr;
     this->x = x;
     this->y = y;
-    Array_2d::block_arr[this->y][this->x] = this;
 }
 
 void Block::set_color(Color c) {
@@ -56,27 +56,31 @@ bool Block::can_down() {
 }
 
 void Block::left() {
-    if(this->can_left()) {
-        this->set_location((this->x)-1, this->y);
-    }
+    // if(this->can_left()) {
+    //     this->set_location((this->x)-1, this->y);
+    // }
+    this->set_location((this->x)-1, this->y);
 }
 
 void Block::right() {
-    if(this->can_right()) {
-        this->set_location((this->x)+1, this->y);
-    }
+    // if(this->can_right()) {
+    //     this->set_location((this->x)+1, this->y);
+    // }
+    this->set_location((this->x)+1, this->y);
 }
 
 void Block::down() {
     if(this->can_down()) {
         this->set_location(this->x, (this->y)+1);
     }
+    Array_2d::update(this);
 }
 
 void Block::down_all() {
     while(this->can_down()) {
         this->down();
     }
+    Array_2d::update(this);
 }
 
 std::string Block::to_string() {

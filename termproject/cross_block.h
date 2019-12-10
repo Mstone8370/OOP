@@ -3,6 +3,8 @@
 
 #include "big_block.h"
 
+#include "color.h"
+
 class CrossBlock: public BigBlock {
     private:
 
