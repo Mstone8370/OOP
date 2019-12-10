@@ -56,24 +56,14 @@ bool Block::can_down() {
 }
 
 void Block::left() {
-    // if(this->can_left()) {
-    //     this->set_location((this->x)-1, this->y);
-    // }
     this->set_location((this->x)-1, this->y);
 }
 
 void Block::right() {
-    // if(this->can_right()) {
-    //     this->set_location((this->x)+1, this->y);
-    // }
     this->set_location((this->x)+1, this->y);
 }
 
 void Block::down() {
-    // if(this->can_down()) {
-    //     this->set_location(this->x, (this->y)+1);
-    // }
-    // Array_2d::update(this);
     this->set_location(this->x, (this->y)+1);
 }
 
@@ -85,5 +75,19 @@ void Block::down_all() {
 }
 
 std::string Block::to_string() {
-     return std::to_string(this->color);
+    // switch(this->color) {
+    //     case GREY:
+    //         return "%";
+    //     case RED:
+    //         return "@";
+    //     case GREEN:
+    //         return "#";
+    //     case BLUE:
+    //         return "&";
+    //     case NONE:
+    //         return ".";
+    //     default:
+    //         return ".";
+    // }
+    return std::to_string(this->color);
 }

@@ -12,6 +12,7 @@ class Block {
     int x, y;
     
     public:
+    Block();
     Block(Color c, int x, int y);
     Color get_color();
     int get_x();

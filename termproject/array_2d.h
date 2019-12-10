@@ -14,6 +14,7 @@
 class Block;
 class BigBlock;
 class CrossBlock;
+class FoldBlock;
 
 enum Type {
     CROSS, FOLD, TREE

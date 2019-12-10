@@ -2,6 +2,7 @@
 #include "block.h"
 #include "big_block.h"
 #include "cross_block.h"
+#include "fold_block.h"
 
 Block* Array_2d::block_arr[H][W] = { nullptr };
 
@@ -11,7 +12,8 @@ Array_2d::Array_2d() {
 
     while(true) {
 
-        BigBlock* current_block = new CrossBlock(1, RED, BLUE, GREEN);
+        // BigBlock* current_block = new CrossBlock(1, RED, BLUE, GREEN);
+        BigBlock* current_block = new FoldBlock(1, RED, BLUE);
 
         while(true) {
             this->print();
@@ -37,6 +39,7 @@ Array_2d::Array_2d() {
                 break;
             } else if(c == 'r') {
                 current_block->rotate();
+                this->print();
             } else {
                 continue;
             }

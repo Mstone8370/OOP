@@ -53,8 +53,10 @@ void BigBlock::left() {
         for(auto iter = (this->v).begin(); iter < (this->v).end(); iter++) {
             (*iter)->left();
         }
+        this->min_x--;
+        this->max_x--;
+        this->update();
     }
-    this->update();
 }
 
 void BigBlock::right() {
@@ -62,8 +64,10 @@ void BigBlock::right() {
         for(auto iter = (this->v).begin(); iter < (this->v).end(); iter++) {
             (*iter)->right();
         }
+        this->min_x++;
+        this->max_x++;
+        this->update();
     }
-    this->update();
 }
 
 void BigBlock::down() {
@@ -71,8 +75,10 @@ void BigBlock::down() {
         for(auto iter = (this->v).begin(); iter < (this->v).end(); iter++) {
             (*iter)->down();
         }
+        this->min_y++;
+        this->max_y++;
+        this->update();
     }
-    this->update();
 }
 
 void BigBlock::update() {
