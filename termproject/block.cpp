@@ -12,7 +12,7 @@ Color Block::get_color() { return this->color; }
 int Block::get_x() { return this->x; }
 int Block::get_y() { return this->y; }
 
-void Block::set_location(int x, int y) { // set_loctaion 한 다음 Array_2d::update(b) 해야함
+void Block::set_location(int x, int y) {
     Array_2d::block_arr[this->y][this->x] = nullptr;
     this->x = x;
     this->y = y;

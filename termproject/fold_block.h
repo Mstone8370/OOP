@@ -11,6 +11,7 @@ class FoldBlock: public BigBlock {
 
     public:
     FoldBlock(int x, Color c1, Color c2);
+    bool can_rotate();
     void rotate();
 };
 

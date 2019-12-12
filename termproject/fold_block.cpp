@@ -15,13 +15,29 @@ FoldBlock::FoldBlock(int x, Color c1, Color c2) {
     this->v.push_back(b3);
 }
 
+bool FoldBlock::can_rotate() {
+    for(int i = min_y; i <= max_y; i++) {
+        for(int j = min_x; j <= max_x; j++) {
+            Block* b = Array_2d::block_arr[i][j];
+            if(b == nullptr) continue;
+            if(std::find((this->v).begin(), (this->v).end(), b) == (this->v).end()) {
+                return false;
+            }
+        }
+    }
+
+    return true;
+}
+
 void FoldBlock::rotate() {
-    // TODO. 회전 범위 안에 BigBlock에 포함되지 않은 블록이 있으면 회전 불가능하게 만들기
-    // 4개의 블록을 모두 검사해서 v에 포합되어있지 않은 블록이 있으면 바로 리턴
+    if(!this->can_rotate()) {
+        return;
+    }
+
     int x, y;
 
-    x = min_x;
-    y = min_y;
+    x = this->min_x;
+    y = this->min_y;
     move_block(x, y, x+1, y);
     move_block(x, y+1, x, y);
     move_block(x+1, y+1, x, y+1);

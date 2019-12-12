@@ -4,6 +4,7 @@
 #include <iostream>
 #include <unistd.h>
 #include <vector>
+#include <ctime>
 
 #include "color.h"
 #include "getch.h"
@@ -15,6 +16,7 @@ class Block;
 class BigBlock;
 class CrossBlock;
 class FoldBlock;
+class TreeBlock;
 
 enum Type {
     CROSS, FOLD, TREE
@@ -33,6 +35,8 @@ class Array_2d {
     void down_blocks();
     void delete_block(int x, int y);
     void print();
+    void choose_color(int& c1, int&c2);
+    void choose_color(int& c1, int& c2, int& c3);
 };
 
 #endif

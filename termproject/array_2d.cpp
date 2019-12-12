@@ -3,17 +3,37 @@
 #include "big_block.h"
 #include "cross_block.h"
 #include "fold_block.h"
+#include "tree_block.h"
+
+#define BLK_GEN_POS 1
 
 Block* Array_2d::block_arr[H][W] = { nullptr };
 
 Array_2d::Array_2d() {
-    // Block* block = new Block(BLUE, 1, 6);
-    // block_arr[11][3] = new Block(RED, 3, 1);
+    srand((unsigned int)time(0));
 
     while(true) {
+        int random = rand() % 3;
+        std::cout << random << std::endl;
 
-        // BigBlock* current_block = new CrossBlock(1, RED, BLUE, GREEN);
-        BigBlock* current_block = new FoldBlock(1, RED, BLUE);
+        BigBlock* current_block;
+
+        if(random == 0) {
+            int c1, c2;
+            this->choose_color(c1, c2);
+            if(!this->can_make(FOLD)) break;
+            current_block = new FoldBlock(BLK_GEN_POS, Color(c1), Color(c2));
+        } else if(random == 1) {
+            int c1, c2, c3;
+            this->choose_color(c1, c2, c3);
+            if(!this->can_make(CROSS)) break;
+            current_block = new CrossBlock(BLK_GEN_POS, Color(c1), Color(c2), Color(c3));
+        } else {
+            int c1, c2;
+            this->choose_color(c1, c2);
+            if(!this->can_make(TREE)) break;
+            current_block = new TreeBlock(BLK_GEN_POS, Color(c1), Color(c2));
+        }
 
         while(true) {
             this->print();
@@ -37,37 +57,37 @@ Array_2d::Array_2d() {
                 this->down_blocks();
                 this->print();
                 break;
-            } else if(c == 'r') {
+            } else if(c == 'e') {
                 current_block->rotate();
                 this->print();
             } else {
                 continue;
             }
-            
-            // sleep(1);
         }
     }
+
+    std::cout << "\nfin\n" << std::endl;
 }
 
 bool Array_2d::can_make(Type t) {
     switch(t) {
         case CROSS:
-            for(int x = 1; x < 4; x++) {
+            for(int x = BLK_GEN_POS; x < BLK_GEN_POS+3; x++) {
                 if(block_arr[2][x] != nullptr) {
                     return false;
                 }
             }
             return true;
         case FOLD:
-            if(block_arr[2][2] != nullptr) {
-                return false;
-            }
-            return true;
-        case TREE:
-            for(int x = 1; x < 3; x++) {
+            for(int x = BLK_GEN_POS; x < BLK_GEN_POS+2; x++) {
                 if(block_arr[1][x] != nullptr) {
                     return false;
                 }
+            }
+            return true;
+        case TREE:
+            if(block_arr[2][BLK_GEN_POS] != nullptr) {
+                return false;
             }
             return true;
         default:
@@ -120,4 +140,23 @@ void Array_2d::print() {
         }
         std::cout << std::endl;
     }
+}
+
+void Array_2d::choose_color(int& c1, int& c2) {
+    c1 = rand() % 3;
+    c2 = rand() % 3;
+    while(c1 == c2) c2 = rand() % 3;
+    c1++;
+    c2++;
+}
+
+void Array_2d::choose_color(int& c1, int& c2, int& c3) {
+    c1 = rand() % 3;
+    c2 = rand() % 3;
+    c3 = rand() % 3;
+    while(c1 == c2) c2 = rand() % 3;
+    while(c1 == c3 || c2 == c3) c3 = rand() % 3;
+    c1++;
+    c2++;
+    c3++;
 }
