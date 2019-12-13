@@ -13,13 +13,13 @@ class BigBlock {
     void update();
 
     public:
-    virtual void rotate() = 0;
     bool can_left();
     bool can_right();
     bool can_down();
     void left();
     void right();
     void down();
+    virtual void rotate() = 0;
 };
 
 #endif

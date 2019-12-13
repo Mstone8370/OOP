@@ -14,7 +14,6 @@ Array_2d::Array_2d() {
 
     while(true) {
         int random = rand() % 3;
-        std::cout << random << std::endl;
 
         BigBlock* current_block;
 
@@ -63,6 +62,14 @@ Array_2d::Array_2d() {
             } else {
                 continue;
             }
+        }
+        while(can_explosion()) {
+            explosion();
+            print();
+            sleep(1);
+            clear_explosion();
+            print();
+            down_blocks();
         }
     }
 
@@ -129,17 +136,22 @@ void Array_2d::print() {
     std::system("clear");
     std::cout << "Score: " << this->score << std::endl;
 
+    std::cout << " W  W  W  W  W  W  W " << std::endl;
     for(int i = 0; i < H; i++) {
+        std::cout << " W ";
         for(int j = 0; j < W; j++) {
             Block* current_block = block_arr[i][j];
             if(current_block == nullptr) {
-                std::cout << " . ";
+                // std::cout << " . ";
+                std::cout << "   ";
             } else {
                 std::cout << " " << current_block->to_string() <<  " ";
             }
         }
+        std::cout << " W ";
         std::cout << std::endl;
     }
+    std::cout << " W  W  W  W  W  W  W " << std::endl;
 }
 
 void Array_2d::choose_color(int& c1, int& c2) {
@@ -159,4 +171,83 @@ void Array_2d::choose_color(int& c1, int& c2, int& c3) {
     c1++;
     c2++;
     c3++;
+}
+
+bool Array_2d::can_explosion() {
+    this->find_explosion();
+    if(this->explosion_set.size() > 0) return true;
+    return false;
+}
+
+void Array_2d::find_explosion() {
+    for(int i = (H-1); i >= 0; i--) {
+        for(int j = (W-1); j >= 0; j--) {
+            Block* current_block = block_arr[i][j];
+            if(current_block == nullptr) continue;
+            if(std::find(explosion_set.begin(), explosion_set.end(), current_block) != explosion_set.end()) {
+                continue;
+            }
+            std::set<Block*> s;
+            find_same_color(current_block, current_block->get_color(), s);
+
+            int grey_count = 0;
+            for(auto iter = s.begin(); iter != s.end(); iter++) {
+                Color c = (*iter)->get_color();
+                if(c == GREY) {
+                    grey_count++;
+                }
+            }
+            if((s.size()-grey_count) >= 4) {
+                explosion_set.insert(s.begin(), s.end());
+            }
+        }
+    }
+}
+
+void Array_2d::find_same_color(Block* b, Color c, std::set<Block*>& s) {
+    int sequence[4][2] = { { -1, 0 }, { 0, 1 }, { 1, 0 }, { 0, -1 } }; // { y, x }
+    int x = b->get_x();
+    int y = b->get_y();
+
+    s.insert(b);
+    for(int i = 0; i < 4; i++) {
+        int next_x = x + sequence[i][1];
+        int next_y = y + sequence[i][0];
+
+        if((next_x < 0 || next_x >= W) || (next_y < 0 || next_y >= H)) continue;
+        Block* neighbor = block_arr[next_y][next_x];
+
+        if(neighbor == nullptr) continue;
+        if(std::find(s.begin(), s.end(), neighbor) != s.end()) continue;
+
+        Color neighbor_color = neighbor->get_color();
+        if(neighbor_color == GREY) {
+            s.insert(neighbor);
+        } else if(c == neighbor_color) {
+            find_same_color(neighbor, c, s);
+        }
+    }
+
+    return;
+}
+
+void Array_2d::explosion() {
+    int next_score = score;
+    for(auto iter = explosion_set.begin(); iter != explosion_set.end(); iter++) {
+        int x = (*iter)->get_x();
+        int y = (*iter)->get_y();
+        block_arr[y][x]->set_color(EXPLOSION);
+        next_score = score + 1;
+    }
+    score = next_score;
+}
+
+void Array_2d::clear_explosion() {
+    for(auto iter = explosion_set.begin(); iter != explosion_set.end(); iter++) {
+        int x = (*iter)->get_x();
+        int y = (*iter)->get_y();
+        block_arr[y][x] = nullptr;
+        delete(*iter);
+    }
+    explosion_set.erase(explosion_set.begin(), explosion_set.end());
 }

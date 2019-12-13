@@ -75,19 +75,19 @@ void Block::down_all() {
 }
 
 std::string Block::to_string() {
-    // switch(this->color) {
-    //     case GREY:
-    //         return "%";
-    //     case RED:
-    //         return "@";
-    //     case GREEN:
-    //         return "#";
-    //     case BLUE:
-    //         return "&";
-    //     case NONE:
-    //         return ".";
-    //     default:
-    //         return ".";
-    // }
-    return std::to_string(this->color);
+    switch(this->color) {
+        case GREY:
+            return "0";
+        case RED:
+            return "1";
+        case GREEN:
+            return "2";
+        case BLUE:
+            return "3";
+        case EXPLOSION:
+            return "X";
+        default:
+            return ".";
+    }
+    // return std::to_string(this->color);
 }

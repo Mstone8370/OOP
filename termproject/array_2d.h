@@ -4,6 +4,7 @@
 #include <iostream>
 #include <unistd.h>
 #include <vector>
+#include <set>
 #include <ctime>
 
 #include "color.h"
@@ -25,6 +26,10 @@ enum Type {
 class Array_2d {
     private:
     int score;
+    std::set<Block*> explosion_set;
+    void find_explosion();
+    void find_same_color(Block* b, Color c, std::set<Block*>& s);
+    void clear_explosion();
 
     public:
     static Block* block_arr[H][W];
@@ -37,6 +42,8 @@ class Array_2d {
     void print();
     void choose_color(int& c1, int&c2);
     void choose_color(int& c1, int& c2, int& c3);
+    bool can_explosion();
+    void explosion();
 };
 
 #endif
