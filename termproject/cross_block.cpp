@@ -1,6 +1,6 @@
 #include "cross_block.h"
 
-CrossBlock::CrossBlock(int x, Color c1, Color c2, Color c3) {
+CrossBlock::CrossBlock(int x, Color c1, Color c2, Color c3, Color grey) {
     this->min_x = x;
     this->min_y = 0;
     this->max_x = x + 2;
@@ -9,7 +9,7 @@ CrossBlock::CrossBlock(int x, Color c1, Color c2, Color c3) {
     Block* top = new Block(c3, x+1, 0);
     Block* right = new Block(c2, x+2, 1);
     Block* bottom = new Block(c1, x+1, 2);
-    Block* left = new Block(GREY, x, 1);
+    Block* left = new Block(grey, x, 1);
     Block* center = new Block(c1, x+1, 1);
 
     this->v.push_back(top);

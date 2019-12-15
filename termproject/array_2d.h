@@ -39,11 +39,12 @@ class Array_2d {
     static void update(Block* b);
     void down_blocks();
     void delete_block(int x, int y);
-    void print();
     void choose_color(int& c1, int&c2);
     void choose_color(int& c1, int& c2, int& c3);
     bool can_explosion();
-    void explosion();
+    void explosion(int s);
+    void print(int bonus=0);
+    void print_end(Type type);
 };
 
 #endif

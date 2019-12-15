@@ -5,12 +5,14 @@
 #include "fold_block.h"
 #include "tree_block.h"
 
-#define BLK_GEN_POS 1
+#define BLK_GEN_POS (1)
 
 Block* Array_2d::block_arr[H][W] = { nullptr };
 
 Array_2d::Array_2d() {
     srand((unsigned int)time(0));
+
+    Type type;
 
     while(true) {
         int random = rand() % 3;
@@ -18,19 +20,22 @@ Array_2d::Array_2d() {
         BigBlock* current_block;
 
         if(random == 0) {
+            type = FOLD;
             int c1, c2;
             this->choose_color(c1, c2);
-            if(!this->can_make(FOLD)) break;
+            if(!this->can_make(type)) break;
             current_block = new FoldBlock(BLK_GEN_POS, Color(c1), Color(c2));
         } else if(random == 1) {
+            type = CROSS;
             int c1, c2, c3;
             this->choose_color(c1, c2, c3);
-            if(!this->can_make(CROSS)) break;
+            if(!this->can_make(type)) break;
             current_block = new CrossBlock(BLK_GEN_POS, Color(c1), Color(c2), Color(c3));
         } else {
+            type = TREE;
             int c1, c2;
             this->choose_color(c1, c2);
-            if(!this->can_make(TREE)) break;
+            if(!this->can_make(type)) break;
             current_block = new TreeBlock(BLK_GEN_POS, Color(c1), Color(c2));
         }
 
@@ -63,17 +68,25 @@ Array_2d::Array_2d() {
                 continue;
             }
         }
+        int s = 0;
         while(can_explosion()) {
-            explosion();
-            print();
-            sleep(1);
+            s++;
+
+            usleep(300000);
+            explosion(s);
+            print(s);
+
+            usleep(300000);
             clear_explosion();
-            print();
+            print(s);
+
+            usleep(300000);
             down_blocks();
+            print(s);
         }
     }
 
-    std::cout << "\nfin\n" << std::endl;
+    print_end(type);
 }
 
 bool Array_2d::can_make(Type t) {
@@ -130,28 +143,6 @@ void Array_2d::delete_block(int x, int y) {
         delete(b);
         block_arr[y][x] = nullptr;
     }
-}
-
-void Array_2d::print() {
-    std::system("clear");
-    std::cout << "Score: " << this->score << std::endl;
-
-    std::cout << " W  W  W  W  W  W  W " << std::endl;
-    for(int i = 0; i < H; i++) {
-        std::cout << " W ";
-        for(int j = 0; j < W; j++) {
-            Block* current_block = block_arr[i][j];
-            if(current_block == nullptr) {
-                // std::cout << " . ";
-                std::cout << "   ";
-            } else {
-                std::cout << " " << current_block->to_string() <<  " ";
-            }
-        }
-        std::cout << " W ";
-        std::cout << std::endl;
-    }
-    std::cout << " W  W  W  W  W  W  W " << std::endl;
 }
 
 void Array_2d::choose_color(int& c1, int& c2) {
@@ -231,13 +222,13 @@ void Array_2d::find_same_color(Block* b, Color c, std::set<Block*>& s) {
     return;
 }
 
-void Array_2d::explosion() {
+void Array_2d::explosion(int s) {
     int next_score = score;
     for(auto iter = explosion_set.begin(); iter != explosion_set.end(); iter++) {
         int x = (*iter)->get_x();
         int y = (*iter)->get_y();
         block_arr[y][x]->set_color(EXPLOSION);
-        next_score = score + 1;
+        next_score = score + s;
     }
     score = next_score;
 }
@@ -250,4 +241,75 @@ void Array_2d::clear_explosion() {
         delete(*iter);
     }
     explosion_set.erase(explosion_set.begin(), explosion_set.end());
+}
+
+void Array_2d::print(int bonus) {
+    std::system("clear");
+    std::cout << "Score: " << this->score;
+    if(bonus < 1) std::cout << std::endl << std::endl;
+    else if(bonus == 1) std::cout << "  +" << bonus << std::endl << std::endl;
+    else std::cout << "  +" << bonus << "  combo!!" << std::endl << std::endl;
+
+    // std::cout << "\033[0;47m W W W W W W W\033[0m" << std::endl;
+    std::cout << "\033[0;47m              \033[0m" << std::endl;
+    for(int i = 0; i < H; i++) {
+        // std::cout << "\033[0;47m W\033[0m";
+        std::cout << "\033[0;47m  \033[0m";
+        for(int j = 0; j < W; j++) {
+            Block* current_block = block_arr[i][j];
+            if(current_block == nullptr) {
+                std::cout << "  ";
+            } else {
+                std::cout << current_block->to_string() ;
+            }
+        }
+        // std::cout << "\033[0;47m W\033[0m";
+        std::cout << "\033[0;47m  \033[0m";
+        std::cout << std::endl;
+    }
+    // std::cout << "\033[0;47m W W W W W W W\033[0m" << std::endl;
+    std::cout << "\033[0;47m              \033[0m" << std::endl;
+}
+
+void Array_2d::print_end(Type type) {
+    std::system("clear");
+    std::cout << "Score: " << this->score << std::endl << std::endl;
+
+    BigBlock* b;
+
+    switch(type) {
+        case CROSS:
+            b = new CrossBlock(BLK_GEN_POS, UNABLE, UNABLE, UNABLE, UNABLE);
+            break;
+        case FOLD:
+            b = new FoldBlock(BLK_GEN_POS, UNABLE, UNABLE);
+            break;
+        case TREE:
+            b = new TreeBlock(BLK_GEN_POS, UNABLE, UNABLE);
+            break;
+        default:
+            break;
+    }
+
+    // std::cout << "\033[0;47m W W W W W W W\033[0m" << std::endl;
+    std::cout << "\033[0;47m              \033[0m" << std::endl;
+    for(int i = 0; i < H; i++) {
+        // std::cout << "\033[0;47m W\033[0m";
+        std::cout << "\033[0;47m  \033[0m";
+        for(int j = 0; j < W; j++) {
+            Block* current_block = block_arr[i][j];
+            if(current_block == nullptr) {
+                std::cout << "  ";
+            } else {
+                std::cout << current_block->to_string() ;
+            }
+        }
+        // std::cout << "\033[0;47m W\033[0m";
+        std::cout << "\033[0;47m  \033[0m";
+        std::cout << std::endl;
+    }
+    // std::cout << "\033[0;47m W W W W W W W\033[0m" << std::endl;
+    std::cout << "\033[0;47m              \033[0m" << std::endl << std::endl;
+    std::cout << "==[ G A M E   O V E R ]==" << std::endl << std::endl;
+    std::cout << "Score: " << this->score << std::endl << std::endl;
 }

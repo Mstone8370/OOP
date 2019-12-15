@@ -2,7 +2,7 @@
 #define COLOR_H
 
 enum Color {
-    GREY, RED, GREEN, BLUE, EXPLOSION
+    GREY, RED, GREEN, BLUE, EXPLOSION, UNABLE
 };
 
 #endif

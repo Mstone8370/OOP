@@ -75,19 +75,37 @@ void Block::down_all() {
 }
 
 std::string Block::to_string() {
+    // switch(this->color) {
+    //     case GREY:
+    //         return "\033[0;40m 0\033[0m";
+    //     case RED:
+    //         return "\033[0;41m 1\033[0m";
+    //     case GREEN:
+    //         return "\033[0;42m 2\033[0m";
+    //     case BLUE:
+    //         return "\033[0;44m 3\033[0m";
+    //     case EXPLOSION:
+    //         return "\033[1;33m X\033[0m";
+    //    case UNABLE:
+    //         return "\033[1;35m X\033[0m";
+    //     default:
+    //         return ".";
+    // }
+
     switch(this->color) {
         case GREY:
-            return "0";
+            return "\033[0;40m  \033[0m";
         case RED:
-            return "1";
+            return "\033[0;41m  \033[0m";
         case GREEN:
-            return "2";
+            return "\033[0;42m  \033[0m";
         case BLUE:
-            return "3";
+            return "\033[0;44m  \033[0m";
         case EXPLOSION:
-            return "X";
+            return "\033[1;33m X\033[0m";
+        case UNABLE:
+            return "\033[1;35m X\033[0m";
         default:
             return ".";
     }
-    // return std::to_string(this->color);
 }
