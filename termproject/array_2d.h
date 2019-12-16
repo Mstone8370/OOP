@@ -28,7 +28,7 @@ class Array_2d {
     int score;
     std::set<Block*> explosion_set;
     void find_explosion();
-    void find_same_color(Block* b, Color c, std::set<Block*>& s);
+    void find_same_color(Block* b, std::set<Block*>& s);
     void clear_explosion();
 
     bool can_make(Type t);

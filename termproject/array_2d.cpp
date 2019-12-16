@@ -38,7 +38,7 @@ void Array_2d::run() {
             int c1, c2;
             this->choose_color(c1, c2);
             if(!this->can_make(type)) break;
-            current_block = new TreeBlock(BLK_GEN_POS, Color(c1), Color(c2));
+            current_block = new TreeBlock(BLK_GEN_POS+1, Color(c1), Color(c2));
         }
 
         while(true) {
@@ -181,7 +181,7 @@ void Array_2d::find_explosion() {
                 continue;
             }
             std::set<Block*> s;
-            find_same_color(current_block, current_block->get_color(), s);
+            find_same_color(current_block, s);
 
             int grey_count = 0;
             for(auto iter = s.begin(); iter != s.end(); iter++) {
@@ -197,10 +197,11 @@ void Array_2d::find_explosion() {
     }
 }
 
-void Array_2d::find_same_color(Block* b, Color c, std::set<Block*>& s) {
+void Array_2d::find_same_color(Block* b, std::set<Block*>& s) {
     int sequence[4][2] = { { -1, 0 }, { 0, 1 }, { 1, 0 }, { 0, -1 } }; // { y, x }
     int x = b->get_x();
     int y = b->get_y();
+    Color c = b->get_color();
 
     s.insert(b);
     for(int i = 0; i < 4; i++) {
@@ -217,7 +218,7 @@ void Array_2d::find_same_color(Block* b, Color c, std::set<Block*>& s) {
         if(neighbor_color == GREY) {
             s.insert(neighbor);
         } else if(c == neighbor_color) {
-            find_same_color(neighbor, c, s);
+            find_same_color(neighbor, s);
         }
     }
 
