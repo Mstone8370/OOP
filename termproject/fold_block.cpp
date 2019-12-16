@@ -6,9 +6,17 @@ FoldBlock::FoldBlock(int x, Color c1, Color c2) {
     this->max_x = x + 1;
     this->max_y = 1;
 
-    Block* b1 = new Block(c1, x+1, 0);
-    Block* b2 = new Block(c2, x+1, 1);
-    Block* b3 = new Block(c2, x, 1);
+    Block* b1;
+    if(Array_2d::block_arr[0][x+1] != nullptr) b1 = new Block(UNABLE, x+1, 0);
+    else b1 = new Block(c1, x+1, 0);
+
+    Block* b2;
+    if(Array_2d::block_arr[1][x+1] != nullptr) b2 = new Block(UNABLE, x+1, 1);
+    else b2 = new Block(c2, x+1, 1);
+
+    Block* b3;
+    if(Array_2d::block_arr[1][x] != nullptr) b3 = new Block(UNABLE, x, 1);
+    else b3 = new Block(c2, x, 1);
 
     this->v.push_back(b1);
     this->v.push_back(b2);

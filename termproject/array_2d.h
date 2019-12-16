@@ -40,7 +40,7 @@ class Array_2d {
     bool can_explosion();
     void explosion(int s);
     void print(int bonus=0);
-    void print_end(Type type);
+    void print_end();
 
     public:
     static Block* block_arr[H][W];

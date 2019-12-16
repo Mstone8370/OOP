@@ -25,19 +25,28 @@ void Array_2d::run() {
             type = FOLD;
             int c1, c2;
             this->choose_color(c1, c2);
-            if(!this->can_make(type)) break;
+            if(!this->can_make(type)) {
+                current_block = new FoldBlock(BLK_GEN_POS, Color(c1), Color(c2));
+                break;
+            }
             current_block = new FoldBlock(BLK_GEN_POS, Color(c1), Color(c2));
         } else if(random == 1) {
             type = CROSS;
             int c1, c2, c3;
             this->choose_color(c1, c2, c3);
-            if(!this->can_make(type)) break;
+            if(!this->can_make(type)) {
+                current_block = new CrossBlock(BLK_GEN_POS, Color(c1), Color(c2), Color(c3));
+                break;
+            }
             current_block = new CrossBlock(BLK_GEN_POS, Color(c1), Color(c2), Color(c3));
         } else {
             type = TREE;
             int c1, c2;
             this->choose_color(c1, c2);
-            if(!this->can_make(type)) break;
+            if(!this->can_make(type)) {
+                current_block = new TreeBlock(BLK_GEN_POS+1, Color(c1), Color(c2));
+                break;
+            }
             current_block = new TreeBlock(BLK_GEN_POS+1, Color(c1), Color(c2));
         }
 
@@ -88,7 +97,7 @@ void Array_2d::run() {
         }
     }
 
-    print_end(type);
+    print_end();
 }
 
 bool Array_2d::can_make(Type t) {
@@ -108,7 +117,7 @@ bool Array_2d::can_make(Type t) {
             }
             return true;
         case TREE:
-            if(block_arr[2][BLK_GEN_POS] != nullptr) {
+            if(block_arr[2][BLK_GEN_POS+1] != nullptr) {
                 return false;
             }
             return true;
@@ -274,25 +283,9 @@ void Array_2d::print(int bonus) {
     std::cout << "\033[0;47m              \033[0m" << std::endl;
 }
 
-void Array_2d::print_end(Type type) {
+void Array_2d::print_end() {
     std::system("clear");
     std::cout << "Score: " << this->score << std::endl << std::endl;
-
-    BigBlock* b;
-
-    switch(type) {
-        case CROSS:
-            b = new CrossBlock(BLK_GEN_POS, UNABLE, UNABLE, UNABLE, UNABLE);
-            break;
-        case FOLD:
-            b = new FoldBlock(BLK_GEN_POS, UNABLE, UNABLE);
-            break;
-        case TREE:
-            b = new TreeBlock(BLK_GEN_POS, UNABLE, UNABLE);
-            break;
-        default:
-            break;
-    }
 
     // std::cout << "\033[0;47m W W W W W W W\033[0m" << std::endl;
     std::cout << "\033[0;47m              \033[0m" << std::endl;

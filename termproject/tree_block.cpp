@@ -6,9 +6,17 @@ TreeBlock::TreeBlock(int x, Color c1, Color c2) {
     this->max_x = x;
     this->max_y = 2;
 
-    Block* b1 = new Block(c1, x, 0);
-    Block* b2 = new Block(c1, x, 2);
-    Block* center = new Block(c2, x, 1);
+    Block* b1;
+    if(Array_2d::block_arr[0][x] != nullptr) b1 = new Block(UNABLE, x, 0);
+    else b1 = new Block(c1, x, 0);
+
+    Block* b2;
+    if(Array_2d::block_arr[2][x] != nullptr) b2 = new Block(UNABLE, x, 2);
+    else b2 = new Block(c1, x, 2);
+
+    Block* center;
+    if(Array_2d::block_arr[1][x] != nullptr) center = new Block(UNABLE, x, 1);
+    else center = new Block(c2, x, 1);
 
     this->v.push_back(b1);
     this->v.push_back(b2);
