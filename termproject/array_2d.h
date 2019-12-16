@@ -31,12 +31,8 @@ class Array_2d {
     void find_same_color(Block* b, Color c, std::set<Block*>& s);
     void clear_explosion();
 
-    public:
-    static Block* block_arr[H][W];
-    Array_2d();
     bool can_make(Type t);
     int get_score();
-    static void update(Block* b);
     void down_blocks();
     void delete_block(int x, int y);
     void choose_color(int& c1, int&c2);
@@ -45,6 +41,12 @@ class Array_2d {
     void explosion(int s);
     void print(int bonus=0);
     void print_end(Type type);
+
+    public:
+    static Block* block_arr[H][W];
+    Array_2d();
+    void run();
+    static void update(Block* b);
 };
 
 #endif

@@ -11,7 +11,9 @@ Block* Array_2d::block_arr[H][W] = { nullptr };
 
 Array_2d::Array_2d() {
     srand((unsigned int)time(0));
+}
 
+void Array_2d::run() {
     Type type;
 
     while(true) {
