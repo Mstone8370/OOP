@@ -101,10 +101,12 @@ void Array_2d::run() {
 }
 
 bool Array_2d::can_make(Type t) {
+    int temp[3] = {1, 2, 1};    // for CROSS
+    int index = 0;              // for CROSS
     switch(t) {
         case CROSS:
             for(int x = BLK_GEN_POS; x < BLK_GEN_POS+3; x++) {
-                if(block_arr[2][x] != nullptr) {
+                if(block_arr[temp[index++]][x] != nullptr) {
                     return false;
                 }
             }
